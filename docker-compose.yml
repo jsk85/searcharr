@@ -2,12 +2,16 @@ version: '3.0'
 services:
   searcharr:
     container_name: taquillero
+    logging:
+      driver: loki
+      options:
+          loki-url: "http://172.18.0.19:3100/loki/api/v1/push"
     image: toddrob/searcharr:latest
+    restart: always
     volumes:
       - ./data:/app/data
       - ./logs:/app/logs
       - ./settings.py:/app/settings.py
     environment:
       - TZ=Europe/Madrid
-    restart: unless-stopped
     network_mode: host
